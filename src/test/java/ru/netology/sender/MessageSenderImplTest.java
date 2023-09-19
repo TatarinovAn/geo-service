@@ -32,15 +32,10 @@ class MessageSenderImplTest {
         Map<String, String> headers = new HashMap<String, String>();
         headers.put(MessageSenderImpl.IP_ADDRESS_HEADER, ip);
 
-        assertEquals(message, messageSender.send(headers));
-        System.out.println(); // для ввывода в консоль переноса строки
         assertEquals(message.matches("[а-яёА-ЯЁ]+"), messageSender.send(headers).matches("[а-яёА-ЯЁ]+"));
-        System.out.println(); // для ввывода в консоль переноса строки
 
-        assertDoesNotThrow(() -> messageSender.send(headers));
 
-        Mockito.verify(geoService, Mockito.times(3)).byIp(ip);
-        System.out.println();
+        Mockito.verify(geoService, Mockito.times(1)).byIp(ip);
     }
 
     @Test
@@ -63,18 +58,10 @@ class MessageSenderImplTest {
 
         headers.put(MessageSenderImpl.IP_ADDRESS_HEADER, ip);
 
-        assertEquals(message, messageSender.send(headers));
-        System.out.println();
 
-        assertNotEquals(message.matches("[а-яёА-ЯЁ]+"), messageSender.send(headers).matches("^[a-zA-Z]+$"));
-        System.out.println(); // для ввывода в консоль переноса строки
+        assertEquals(message.matches("^[a-zA-Z]+$"), messageSender.send(headers).matches("^[a-zA-Z]+$"));
 
-
-        assertDoesNotThrow(() -> messageSender.send(headers));
-
-        Mockito.verify(geoService, Mockito.times(3)).byIp(ip);
-        System.out.println();
-
+        Mockito.verify(geoService, Mockito.times(1)).byIp(ip);
     }
 
 

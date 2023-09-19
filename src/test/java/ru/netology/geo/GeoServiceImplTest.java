@@ -1,23 +1,19 @@
 package ru.netology.geo;
 
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import ru.netology.entity.Country;
-import ru.netology.entity.Location;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import ru.netology.entity.Country;
+
 
 class GeoServiceImplTest {
-    @Test
-    void geoServiceSpy() {
-        String ip = "96.0.32.11";
-
-        GeoService geoService = Mockito.spy(new GeoServiceImpl());
-
-        Mockito.when(geoService.byIp(ip)).thenReturn(new Location("Piter", Country.BRAZIL, null, 0));
-
-        Location location = geoService.byIp(ip);
-
-        assertEquals(location.getCountry(), Country.BRAZIL);
+    @ParameterizedTest
+    @ValueSource(strings = {"172.0.0.1", "172.0.32.11", "172.00.00.00"})
+    void geoServiceSpy(String ip) {
+        GeoServiceImpl geo = new GeoServiceImpl();
+        Country expected = Country.RUSSIA;
+        Country output = geo.byIp(ip).getCountry();
+        Assertions.assertEquals(expected, output);
     }
 }

@@ -1,25 +1,32 @@
 package ru.netology.i18n;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import ru.netology.entity.Country;
-import ru.netology.entity.Location;
-import ru.netology.geo.GeoService;
-import ru.netology.geo.GeoServiceImpl;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static ru.netology.entity.Country.RUSSIA;
+import static ru.netology.entity.Country.USA;
+
 
 class LocalizationServiceImplTest {
 
     @Test
-    void localizationServiceTest() {
-        String message = "Hola";
+    void localizationServiceTest_Russia() {
+        LocalizationServiceImpl test = new LocalizationServiceImpl();
+        String output = test.locale(RUSSIA);
 
-        LocalizationServiceImpl localizationService = Mockito.spy(new LocalizationServiceImpl());
+        String expected = "Добро пожаловать";
 
-        Mockito.when(localizationService.locale(Country.BRAZIL)).thenReturn("Hola");
+        Assertions.assertEquals(output, expected);
+    }
 
-        assertEquals(message, localizationService.locale(Country.BRAZIL));
+    @Test
+    void localizationServiceTest_USA() {
+        LocalizationServiceImpl test = new LocalizationServiceImpl();
+        String output = test.locale(USA);
+
+        String expected = "Welcome";
+
+        Assertions.assertEquals(output, expected);
     }
 
 }
